@@ -1,0 +1,9 @@
+rootProject.name = 'sample'
+include 'competing-consumer'
+rootProject.name = 'main'
+include 'competing-consumer'
+include 'sample-actor'
+rootProject.name = 'main'
+include 'sample-actor'
+include 'competing-consumer'
+
