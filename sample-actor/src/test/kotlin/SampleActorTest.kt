@@ -7,6 +7,8 @@ import akka.actor.AbstractActor
 import java.time.Duration
 import org.junit.jupiter.api.*
 
+import demo.akka.sample.main.SampleActor
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TestKitSampleTest  {
 
@@ -21,10 +23,8 @@ class TestKitSampleTest  {
                                 sender.tell("world", self)
                                 if (target != null) target!!.forward(message, context)
                             })
-                    .match(
-                            ActorRef::class.java
-                    ) { actorRef ->
-                        target = actorRef
+                    .match(ActorRef::class.java) {
+                        actorRef -> target = actorRef
                         sender.tell("done", self)
                     }
                     .build()
@@ -32,7 +32,7 @@ class TestKitSampleTest  {
     }
 
     @Test
-    fun testIt() {
+    fun testSomeActor() {
         /*
      * Wrap the whole test procedure within a testkit constructor
      * if you want to receive actor replies or use Within(), etc.
@@ -67,6 +67,36 @@ class TestKitSampleTest  {
                     Assertions.assertEquals(ref, probe.lastSender)
 
                     // Will wait for the rest of the 3 seconds
+                    expectNoMessage()
+                    null
+                }
+            }
+        }
+    }
+
+    @Test
+    fun sampleActorTest()
+    {
+        object : TestKit(system) {
+            init {
+                val props = Props.create(SampleActor::class.java)
+                val subject = system!!.actorOf(props)
+
+                val probe = TestKit(system)
+
+                subject.tell(probe.ref, ref)
+
+                expectMsg(Duration.ofSeconds(1), "done")
+
+                within<Any>(Duration.ofSeconds(3) ) {
+                    subject.tell("message1", ref)
+
+                    awaitCond(java.util.function.Supplier { probe.msgAvailable() })
+
+                    expectMsg(Duration.ZERO, "response1")
+                    probe.expectMsg(Duration.ZERO, "message1")
+                    Assertions.assertEquals(ref, probe.lastSender)
+
                     expectNoMessage()
                     null
                 }

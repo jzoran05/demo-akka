@@ -7,6 +7,6 @@ import akka.actor.Props
 fun main() {
     val actorSystem = ActorSystem.create("sample")
     val actorRef = actorSystem.actorOf(Props.create(SampleActor::class.java))
-    actorSystem.log().info("Sending SampleActor")
+    actorSystem.log().info("Sending message to SampleActor...")
     actorRef.tell("Hello akka", ActorRef.noSender())
 }
