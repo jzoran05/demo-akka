@@ -8,6 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/akka-samples-cluster-kotlin" />
             <option value="$PROJECT_DIR$/competing-consumer" />
             <option value="$PROJECT_DIR$/sample-actor" />
           </set>

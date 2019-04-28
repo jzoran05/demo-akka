@@ -6,4 +6,5 @@ include 'sample-actor'
 rootProject.name = 'main'
 include 'sample-actor'
 include 'competing-consumer'
+include 'akka-samples-cluster-kotlin'
 

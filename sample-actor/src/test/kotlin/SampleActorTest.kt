@@ -84,7 +84,7 @@ class TestKitSampleTest  {
 
                 val probe = TestKit(system)
 
-                subject.tell(probe.ref, ref)
+                subject.tell(probe.ref, ref) // injecting the probe
 
                 expectMsg(Duration.ofSeconds(1), "done")
 

@@ -12,7 +12,7 @@ repositories {
 dependencies {
     compile group: 'com.typesafe.akka', name: 'akka-actor_2.12', version: '2.5.22'
     compile group: 'com.typesafe.akka', name: 'akka-testkit_2.12', version: '2.5.22'
-    //test group: 'com.typesafe.akka', name: 'akka-testkit_2.12', version: '2.5.22'
+    compile group: 'com.typesafe.akka', name: 'akka-cluster_2.12', version: '2.5.22'
     testCompile group: 'org.assertj', name: 'assertj-core', version: '3.11.1'
     testCompile "org.junit.jupiter:junit-jupiter-api:5.2.0"
     testCompile "org.junit.jupiter:junit-jupiter-params:5.2.0"
