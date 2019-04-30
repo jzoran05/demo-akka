@@ -18,17 +18,13 @@ object FactorialFrontendMain {
     @JvmStatic
     fun main(args: Array<String>) {
         val upToN = 200
-
-        val config = ConfigFactory.parseString(
-                "akka.cluster.roles = [frontend]").withFallback(
-                ConfigFactory.load("factorial"))
-
+        val config = ConfigFactory.parseString("akka.cluster.roles = [frontend]").withFallback(ConfigFactory.load("factorial"))
         val system = ActorSystem.create("ClusterSystem", config)
-        system.log().info(
-                "Factorials will start when 2 backend members in the cluster.")
+
+        system.log().info("Factorials will start when 2 backend members in the cluster.")
+
         Cluster.get(system).registerOnMemberUp {
-            system.actorOf(Props.create(FactorialFrontend::class.java, upToN, true),
-                    "factorialFrontend")
+            system.actorOf(Props.create(FactorialFrontend::class.java, upToN, true), "factorialFrontend")
         }
 
         Cluster.get(system).registerOnMemberRemoved {
