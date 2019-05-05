@@ -43,7 +43,6 @@ class TransformationBackend : AbstractActor() {
 
     internal fun register(member: Member) {
         if (member.hasRole("frontend"))
-            context.actorSelection(member.address().toString() + "/user/frontend").tell(
-                    BACKEND_REGISTRATION, self())
+            context.actorSelection(member.address().toString() + "/user/frontend").tell(BACKEND_REGISTRATION, self())
     }
 }

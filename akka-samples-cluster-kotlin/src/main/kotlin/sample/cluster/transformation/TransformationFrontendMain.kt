@@ -37,13 +37,13 @@ object TransformationFrontendMain {
         val timeout = Timeout(Duration.create(5, TimeUnit.SECONDS))
         val ec = system.dispatcher()
         val counter = AtomicInteger()
+
         system.scheduler().schedule(interval, interval, Runnable {
-            ask(frontend,
-                    TransformationJob("hello-" + counter.incrementAndGet()),
-                    timeout).onSuccess(object : OnSuccess<Any>() {
-                override fun onSuccess(result: Any) {
-                    println(result)
-                }
+            ask(frontend, TransformationJob("hello-" + counter.incrementAndGet()), timeout)
+                    .onSuccess(object : OnSuccess<Any>() {
+                        override fun onSuccess(result: Any) {
+                            println(result)
+                        }
             }, ec)
         }, ec)
 

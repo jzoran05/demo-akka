@@ -97,7 +97,7 @@ You can read more about cluster aware routers in the documentation.
 
 Let's take a look at a few samples that make use of cluster aware routers.
 
-# Router Example with Group of Routees (Stats)
+## Router Example with Group of Routees (Stats)
 Let's take a look at how to use a cluster aware router with a group of routees, i.e. a router which does not create its routees but instead forwards incoming messages to a given set of actors created elsewhere.
 
 The example application provides a service to calculate statistics for a text. When some text is sent to the service it splits it into words, and delegates the task to count number of characters in each word to a separate worker, a routee of a router. The character count for each word is sent back to an aggregator that calculates the average number of characters per word when all results have been collected.
@@ -131,7 +131,7 @@ StatsSampleMain starts 4 actor systems (cluster members) in the same JVM process
 <path to activator dir>/activator 
   "runMain sample.cluster.stats.StatsSampleMain 0"	
   	
-#Router Example with Pool of Remote Deployed Routees (Stats)
+## Router Example with Pool of Remote Deployed Routees (Stats)
 Let's take a look at how to use a cluster aware router on single master node that creates and deploys workers instead of looking them up.
 
 Open StatsSampleOneMasterMain.java. To keep track of a single master we use the Cluster Singleton in the contrib module. The ClusterSingletonManager is started on each node.
