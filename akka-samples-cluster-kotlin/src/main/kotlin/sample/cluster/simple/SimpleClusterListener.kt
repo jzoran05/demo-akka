@@ -25,7 +25,7 @@ class SimpleClusterListener : AbstractActor() {
         cluster.unsubscribe(self())
     }
 
-    override fun createReceive(): AbstractActor.Receive {
+    override fun createReceive(): Receive {
         return receiveBuilder()
                 .match(MemberUp::class.java) { mUp -> log.info("Member is Up: {}", mUp.member()) }
                 .match(UnreachableMember::class.java) { mUnreachable -> log.info("Member detected as unreachable: {}", mUnreachable.member()) }

@@ -30,8 +30,7 @@ object SimpleClusterApp {
             val system = ActorSystem.create("ClusterSystem", config)
 
             // Create an actor that handles cluster domain events
-            system.actorOf(Props.create(SimpleClusterListener::class.java),
-                    "clusterListener")
+            system.actorOf(Props.create(SimpleClusterListener::class.java), "clusterListener")
 
         }
     }

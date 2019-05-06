@@ -8,4 +8,5 @@ include 'sample-actor'
 include 'competing-consumer'
 include 'akka-samples-cluster-kotlin'
 include 'akka-kubernetes-sample'
+include 'akka-kotlin-sample'
 

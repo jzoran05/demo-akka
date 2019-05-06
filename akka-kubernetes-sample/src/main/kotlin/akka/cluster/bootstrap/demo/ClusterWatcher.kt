@@ -11,7 +11,7 @@ class ClusterWatcher : AbstractActor() {
 
     internal var cluster = Cluster.get(context().system())
 
-    override fun createReceive(): AbstractActor.Receive {
+    override fun createReceive(): Receive {
         return ReceiveBuilder.create()
                 .matchAny { msg -> log.info("Cluster " + cluster.selfAddress() + " >>> " + msg) }
                 .build()
