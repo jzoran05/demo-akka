@@ -27,8 +27,10 @@ class DemoApp internal constructor() : AllDirectives() {
 
         system.log().info("Started [" + system + "], cluster.selfAddress = " + cluster.selfAddress() + ")")
 
+
         //#start-akka-management
         AkkaManagement.get(system).start()
+
         //#start-akka-management
         ClusterBootstrap.get(system).start()
 

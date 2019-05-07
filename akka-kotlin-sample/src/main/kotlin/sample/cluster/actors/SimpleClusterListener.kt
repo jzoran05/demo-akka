@@ -30,8 +30,7 @@ class SimpleClusterListener : AbstractActor() {
                 .match(MemberUp::class.java) { mUp -> log.info("Member is Up: {}", mUp.member()) }
                 .match(UnreachableMember::class.java) { mUnreachable -> log.info("Member detected as unreachable: {}", mUnreachable.member()) }
                 .match(MemberRemoved::class.java) { mRemoved -> log.info("Member is Removed: {}", mRemoved.member()) }
-                .match(MemberEvent::class.java) { message ->
-                    // ignore
+                .match(MemberEvent::class.java) { message -> log.info("Cluster " + cluster.selfAddress() + " >>> " + message)                    // ignore
                 }
                 .build()
     }

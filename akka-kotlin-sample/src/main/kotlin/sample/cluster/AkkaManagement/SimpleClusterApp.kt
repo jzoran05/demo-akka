@@ -3,6 +3,8 @@ package sample.cluster.AkkaManagement
 import akka.actor.ActorSystem
 import akka.actor.Props
 import akka.cluster.Cluster
+import akka.http.javadsl.ConnectHttp
+import akka.http.javadsl.Http
 import akka.management.javadsl.AkkaManagement
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigFactory
@@ -13,7 +15,7 @@ object SimpleClusterApp {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        if (args.size == 0) startup(arrayOf("2551", "2552", "0"))
+        if (args.size == 0) startup(arrayOf("2551", "2552", "2553"))
         else startup(args)
     }
 
@@ -23,8 +25,11 @@ object SimpleClusterApp {
             // Override the configuration of the port
             // To use artery instead of netty, change to "akka.remote.artery.canonical.port"
             // See https://doc.akka.io/docs/akka/current/remoting-artery.html for details
+            val managementPort = port.toInt() + 10
+
             val config = ConfigFactory.parseString(
                     "akka.remote.netty.tcp.port=$port")
+                    .withFallback(ConfigFactory.parseString("akka.management.http.port = $managementPort"))
                     .withFallback(ConfigFactory.load())
 
             // Create an Akka system
