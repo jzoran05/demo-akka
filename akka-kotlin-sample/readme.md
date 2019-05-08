@@ -1,10 +1,17 @@
 # Akka Kotlin Samples
 
-- Deploy as Docker container
-- Use Akka Management (Cluster) HTTP 
+0) Deploy as a Cluster (from IDE)
+1) Deploy as a single Docker container
+2) Use Akka Management (Cluster) HTTP 
+3) Deploy as a Cluster (using multiple Docker containers)
+4) Use Cluster Bootstrap - Local Config
+5) Use Cluster Bootstrap - Kubernetes
 
-## Instructions
-Use kotlin.bat xx.jar to start the jar
+## 0) Deploy as a Cluster (from IDE) - SimpleClusterApp.kt
+
+### 1.1) Deploy from IDE
+
+Note: Use kotlin.bat xx.jar to start the jar
 
 Open application.conf
 
@@ -16,7 +23,11 @@ Open SimpleClusterApp.java.
 The small program together with its configuration starts an ActorSystem with the Cluster enabled. It joins the cluster and starts an actor that logs some membership events. Take a look at the SimpleClusterListener.java actor.
 You can read more about the cluster concepts in the documentation.
 To run this sample, go to the Run tab, and start the application main class sample.cluster.simple.SimpleClusterApp if it is not already started.
-SimpleClusterApp starts three actor systems (cluster members) in the same JVM process. It can be more interesting to run them in separate processes. Stop the application in the Run tab and then open three terminal windows.
+SimpleClusterApp starts three actor systems (cluster members) in the same JVM process. 
+
+
+### 1.2) Deploy from command line
+It can be more interesting to run them in separate processes. Stop the application in the Run tab and then open three terminal windows.
 In the first terminal window, start the first seed node with the following command (on one line):
 
 
@@ -39,3 +50,5 @@ Now you don't need to specify the port number, 0 means that it will use a random
 Start even more nodes in the same way, if you like.
 Shut down one of the nodes by pressing 'ctrl-c' in one of the terminal windows. The other nodes will detect the failure after a while, which you can see in the log output in the other terminals.
 Look at the source code of the actor again. It registers itself as subscriber of certain cluster events. It gets notified with an snapshot event, CurrentClusterState that holds full state information of the cluster. After that it receives events for changes that happen in the cluster.
+
+
