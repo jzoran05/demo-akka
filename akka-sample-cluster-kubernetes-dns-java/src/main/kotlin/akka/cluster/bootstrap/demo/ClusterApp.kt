@@ -6,6 +6,7 @@ package akka.cluster.bootstrap.demo
 import akka.NotUsed
 import akka.actor.ActorRef
 import akka.actor.ActorSystem
+
 import akka.actor.PoisonPill
 import akka.http.javadsl.ConnectHttp
 import akka.http.javadsl.Http
@@ -21,8 +22,8 @@ import akka.actor.Props
 import akka.cluster.Cluster
 import akka.cluster.ClusterEvent
 import akka.cluster.MemberStatus
+import akka.management.AkkaManagement
 import akka.management.cluster.bootstrap.ClusterBootstrap
-import akka.management.javadsl.AkkaManagement
 import akka.stream.Materializer
 
 import java.util.HashSet
@@ -41,6 +42,7 @@ class ClusterApp internal constructor() : AllDirectives() {
         system.log().info("Started [" + system + "], cluster.selfAddress = " + cluster.selfAddress() + ")")
 
 
+        system.log().info("Starting AkkManagement...")
         AkkaManagement.get(system).start()
         system.log().info("Started AkkManagement...")
 
@@ -56,11 +58,11 @@ class ClusterApp internal constructor() : AllDirectives() {
         val noisyActor = createNoisyActor(system)
         system.log().info("Noisy Actor created...")
 
-        val routeFlow = createRoutes(system, cluster).flow(system, materializer)
+        //val routeFlow = createRoutes(system, cluster).flow(system, materializer)
         system.log().info("Route Created...")
 
-        val binding = http.bindAndHandle(routeFlow, ConnectHttp.toHost("0.0.0.0", 8080), materializer)
-        system.log().info("Binding Created...")
+        //val binding = http.bindAndHandle(routeFlow, ConnectHttp.toHost("0.0.0.0", 8080), materializer)
+        //system.log().info("Binding Created...")
 
         cluster.registerOnMemberUp({
             system.log().info("Cluster member is up!")
@@ -74,6 +76,7 @@ class ClusterApp internal constructor() : AllDirectives() {
         return system.actorOf(NoisyActor.props(), "NoisyActor")
     }
 
+    /*
     private fun createRoutes(system: ActorSystem, cluster: Cluster): Route {
         val readyStates = HashSet<MemberStatus>()
         readyStates.add(MemberStatus.up())
@@ -102,6 +105,8 @@ class ClusterApp internal constructor() : AllDirectives() {
             )
         }
     }
+    */
+
 
     companion object {
 
